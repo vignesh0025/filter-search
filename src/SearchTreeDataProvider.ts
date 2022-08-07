@@ -10,10 +10,20 @@ export class Search {
     private decoration = vscode.window.createTextEditorDecorationType({
                         "backgroundColor": "Yellow"
                     });
+
+    private clearDecorations(){
+        vscode.window.activeTextEditor?.setDecorations(this.decoration, []);
+        // TODO: Clear Decorations in all open text editors
+    }
     /**
      * registerProviderscontext
      */
     constructor(context: vscode.ExtensionContext) {
+
+        context.subscriptions.push(vscode.commands.registerCommand("filter-search.clearresults", () => {
+            this.searchTreeProvider?.clear(); 
+            this.clearDecorations();
+        }));
 
         context.subscriptions.push(vscode.commands.registerCommand("filter-search.search", () => {
             vscode.window.showInputBox({ "prompt": "Enter value to search" }).then((value) => {
@@ -36,13 +46,14 @@ export class Search {
                     if(searchTreeItems.length > 0){
                         this.searchTreeLabel = new SearchTreeLabel(document.fileName, searchTreeItems, vscode.TreeItemCollapsibleState.Expanded);
                         this.searchTreeProvider?.refresh(this.searchTreeLabel);
+                        this.searchTreeView?.reveal(searchTreeItems[0]); // TODO: We don't need to reveal any item ideally
                     }
                 }
             });
         }));
 
-/*         context.subscriptions.push(vscode.window.registerTreeDataProvider("search-view", new SearchTreeDataProvider())); */
         this.searchTreeProvider = new SearchTreeDataProvider();
+        // context.subscriptions.push(vscode.window.registerTreeDataProvider("search-view", new SearchTreeDataProvider()));
 
         this.searchTreeView = vscode.window.createTreeView("search-view", { 
             "treeDataProvider": this.searchTreeProvider,
@@ -84,6 +95,11 @@ export class SearchTreeDataProvider implements vscode.TreeDataProvider<vscode.Tr
     getTreeItem(element: vscode.TreeItem): vscode.TreeItem | Thenable<vscode.TreeItem> {
         // console.log(element.label);
         return element;
+    }
+
+    public clear(){
+        this.searchTreeLabels = [];
+        this.eventEmitter.fire(undefined);
     }
 
     public refresh(searchTreeLabel: SearchTreeLabel){

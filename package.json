@@ -1,7 +1,12 @@
 {
-  "name": "filter-search",
+	"name": "filter-search",
+	"author": {
+		"name": "Vignesh D",
+		"email": "vignesh0025@gmail.com"
+	},
+	"publisher": "vd-vignesh0025",
 	"displayName": "Filter Search",
-	"description": "Filters the search macthes in single panel and jump to the position in main file",
+	"description": "Filters the search matches in single panel and jump to the position in main file",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.62.0"
@@ -16,6 +21,15 @@
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
+		"menus": {
+			"view/title": [
+				{
+					"when": "view == search-view ",
+					"group": "navigation",
+					"command": "filter-search.clearresults"
+				}
+			]
+		},
 		"viewsContainers": {
 			"panel": [
 				{
@@ -26,21 +40,31 @@
 			]
 		},
 		"views": {
-			"search-view-container": [{
-				"id": "search-view",
-				"name": "FilterSearch: Results",
-				"contextualTitle": "Search Results"
-			}]
+			"search-view-container": [
+				{
+					"id": "search-view",
+					"name": "FilterSearch: Results",
+					"contextualTitle": "Search Results"
+				}
+			]
 		},
 		"commands": [
 			{
 				"command": "filter-search.search",
-				"title": "FilterSearch: Search"
+				"title": "FilterSearch: Search",
+				"icon":{
+					"dark": "clear-all",
+					"light": "clear-all"
+				}
 			},
 			{
 				"command": "filter-search.jumptoline",
 				"title": "FilterSearch: Jump to match",
 				"enablement": "false"
+			},
+			{
+				"command": "filter-search.clearresults",
+				"title": "FilterSearch: Clear Results"
 			}
 		]
 	},
