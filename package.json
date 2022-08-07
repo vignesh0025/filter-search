@@ -7,7 +7,7 @@
 	"publisher": "vd-vignesh0025",
 	"displayName": "Filter Search",
 	"description": "Filters the search matches in single panel and jump to the position in main file",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.62.0"
 	},
