@@ -6,7 +6,7 @@ This extension adds capability to filter lines in a file to a seperate window. W
 
 For example if there is an image subfolder under your extension project workspace:
 
-\!\[Basic Feature\]\(images/BasicFunc.gif\)
+![Basic Feature](images/BasicFunc.gif)
 
 <!-- > Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow. -->
 
